@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySkiaPlayground.iOS", "MyS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySkiaPlayground", "MySkiaPlayground\MySkiaPlayground.csproj", "{68EEEFBA-2344-474E-9FCE-8A0CC93E450B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA411885-2CC4-4D24-947A-385AFB8E6A72}"
+	ProjectSection(SolutionItems) = preProject
+		test.gif = test.gif
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
