@@ -6,6 +6,7 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
 {
     public class Figure : IFigure
     {
+        public bool IsMoving { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
         public SKColor Color { get; set; }
@@ -47,7 +48,6 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         {
             var isInHorizontal = point.X > X && point.X < Width + X;
             var isInVertical = point.Y > Y && point.Y < Height + Y;
-            Debug.WriteLine($"h: {isInHorizontal} v:{isInVertical}");
             return isInHorizontal && isInVertical;
         }
     }
@@ -58,6 +58,14 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         public Circle(float x, float y, float radius, SKColor color) : base(x, y, color)
         {
             Radius = radius;
+        }
+
+        public bool IsPointInCircle(SKPoint point)
+        {
+            //(x1 - x2)^2 + (y1 - y2)^2 <= D^2
+            var x = Math.Pow((point.X - X), 2);
+            var y = Math.Pow((point.Y - Y), 2);
+            return x + y <= Radius * Radius;
         }
     }
 }

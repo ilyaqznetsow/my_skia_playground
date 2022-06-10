@@ -89,34 +89,55 @@ namespace SkiaScene.TouchManipulation
             }
         }
 
+
         protected virtual void TouchGestureRecognizerOnPan(object sender, PanEventArgs args)
         {
-            //scene check if tap is in any object square
-            //make object selectable
-            //pan object by coords change
+            bool isAnyFigureMoving = _skScene.Figures?.Any(f => f.IsMoving) ?? false;
 
+            if (args.TouchActionType == TouchActionType.Released)
+            {
+                if (isAnyFigureMoving)
+                    foreach (var movingFigure in _skScene.Figures)
+                        movingFigure.IsMoving = false;
+            }
             if (args.TouchActionType != TouchActionType.Moved)
                 return;
+
+
             SKPoint resultVector = args.NewPoint - args.PreviousPoint;
+            //Debug.WriteLine($"{args.NewPoint.X} {args.NewPoint.Y}");
 
-            //var figure = _skScene.Figures?.FirstOrDefault(f =>
-            //{
-            //    if (f is Rect rect)
-            //        return rect.IsPointInRect(args.NewPoint);
-            //    return false;
-            //});
-            //if (figure != null)
-            //{
-            //    figure.X += resultVector.X;
-            //    figure.Y += resultVector.Y;
-            //}
+            SKPoint scenePoint = _skScene.GetCanvasPointFromViewPoint(args.NewPoint);
 
-            _skScene.MoveByVector(resultVector);
+            var figure = isAnyFigureMoving ? _skScene.Figures?.FirstOrDefault(f => f.IsMoving) :
+                _skScene.Figures?.FirstOrDefault(f =>
+            {
+                if (f is Rect rect)
+                    return rect.IsPointInRect(scenePoint);
+                if (f is Circle circle)
+                    return circle.IsPointInCircle(scenePoint);
+                return false;
+            });
+            if (figure != null)
+            {
+                figure.IsMoving = true;
+                var scale = _skScene.GetScale();
+                figure.X += resultVector.X / scale;
+                figure.Y += resultVector.Y / scale;
+            }
+            else
+            {
+                if (!isAnyFigureMoving)
+                    _skScene.MoveByVector(resultVector);
+            }
         }
 
         protected virtual void TouchGestureRecognizerOnDoubleTap(object sender, TapEventArgs args)
         {
             SKPoint scenePoint = _skScene.GetCanvasPointFromViewPoint(args.ViewPoint);
+
+            //Debug.WriteLine($"double tap point {scenePoint.X} {scenePoint.Y}");
+
             _skScene.ZoomByScaleFactor(scenePoint, DoubleTapScaleFactor);
         }
 

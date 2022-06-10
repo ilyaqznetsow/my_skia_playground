@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MySkiaPlayground.SkiaScene.SkiaObjects;
 using SkiaSharp;
 
@@ -7,7 +6,6 @@ namespace MySkiaPlayground.SkiaScene
 {
     public class SKSceneRendererModel
     {
-        //canvas, width, height, angleInRadians, center, scale, gridSize)
         public SKCanvas Canvas { get; set; }
         public float Width { get; set; }
         public float Height { get; set; }

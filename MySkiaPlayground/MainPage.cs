@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MySkiaPlayground.Effects;
 using MySkiaPlayground.SkiaScene;
 using MySkiaPlayground.SkiaScene.SkiaObjects;
@@ -89,8 +90,8 @@ namespace MySkiaPlayground
                             (float)(canvasView.CanvasSize.Height * viewPoint.Y / canvasView.Height));
 
             var actionType = args.Type;
+
             _touchGestureRecognizer.ProcessTouchEvent(args.Id, actionType, point);
-            //Debug.WriteLine($"id {args.Id}, type {actionType} point {point}");
         }
 
         private void OnPaint(object sender, SKPaintSurfaceEventArgs args)
@@ -111,6 +112,8 @@ namespace MySkiaPlayground
                 Figures = canvasView.SceneObjects
             };
             _scene.Render(rendererModel);
+
+            Title = $"scale: {_scene.GetScale()}";
         }
     }
 }
