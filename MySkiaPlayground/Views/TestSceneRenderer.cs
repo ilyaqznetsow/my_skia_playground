@@ -56,13 +56,7 @@ namespace MySkiaPlayground.Views
         {
             foreach (var figure in figures)
             {
-                var paint = new SKPaint() { Color = figure.Color };
-                if (figure is Line line)
-                    canvas.DrawLine(new SKPoint(line.X, line.Y), line.EndPoint, paint);
-                if (figure is SkiaScene.SkiaObjects.Rect rect)
-                    canvas.DrawRect(rect.X, rect.Y, rect.Width, rect.Height, paint);
-                if (figure is SkiaScene.SkiaObjects.Circle circle)
-                    canvas.DrawCircle(new SKPoint(circle.X, circle.Y), circle.Radius, paint);
+                figure.Draw(canvas);
             }
         }
     }

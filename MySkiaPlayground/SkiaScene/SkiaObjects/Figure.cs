@@ -19,6 +19,8 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         }
 
         public abstract bool IsPointOverlap(SKPoint point);
+
+        public abstract void Draw(SKCanvas canvas);
     }
 
     public class Line : Figure
@@ -33,6 +35,11 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         public override bool IsPointOverlap(SKPoint point)
         {
             return point.X >= X && point.X <= EndPoint.X && point.Y >= Y && point.Y <= EndPoint.Y;
+        }
+
+        public override void Draw(SKCanvas canvas)
+        {
+            canvas.DrawLine(new SKPoint(X, Y), EndPoint, new SKPaint() { Color = this.Color });
         }
     }
 
@@ -58,6 +65,11 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
             var isInVertical = point.Y > Y && point.Y < Height + Y;
             return isInHorizontal && isInVertical;
         }
+
+        public override void Draw(SKCanvas canvas)
+        {
+            canvas.DrawRect(X, Y, Width, Height, new SKPaint() { Color = this.Color });
+        }
     }
 
     public class Circle : Figure
@@ -74,6 +86,11 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
             var x = Math.Pow((point.X - X), 2);
             var y = Math.Pow((point.Y - Y), 2);
             return x + y <= Radius * Radius;
+        }
+
+        public override void Draw(SKCanvas canvas)
+        {
+            canvas.DrawCircle(new SKPoint(X, Y), Radius, new SKPaint() { Color = this.Color });
         }
     }
 }

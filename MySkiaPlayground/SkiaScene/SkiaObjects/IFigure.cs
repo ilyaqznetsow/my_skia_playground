@@ -9,5 +9,6 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         float Y { get; set; }
         bool IsMoving { get; set; }
         bool IsPointOverlap(SKPoint point);
+        void Draw(SKCanvas canvas);
     }
 }
