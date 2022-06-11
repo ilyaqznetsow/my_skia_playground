@@ -4,7 +4,7 @@ using SkiaSharp;
 
 namespace MySkiaPlayground.SkiaScene.SkiaObjects
 {
-    public class Figure : IFigure
+    public abstract class Figure : IFigure
     {
         public bool IsMoving { get; set; }
         public float X { get; set; }
@@ -17,6 +17,8 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
             Y = y;
             Color = color;
         }
+
+        public abstract bool IsPointOverlap(SKPoint point);
     }
 
     public class Line : Figure
@@ -26,6 +28,11 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         public Line(float x, float y, SKPoint endPoint, SKColor color) : base(x, y, color)
         {
             EndPoint = endPoint;
+        }
+
+        public override bool IsPointOverlap(SKPoint point)
+        {
+            return point.X >= X && point.X <= EndPoint.X && point.Y >= Y && point.Y <= EndPoint.Y;
         }
     }
 
@@ -44,7 +51,8 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         //Center y = y + 1 / 2 of height
         public SKPoint GetCenter() => new SKPoint((float)(X + (Width * 0.5)), (float)(Y + (Height * 0.5)));
 
-        public bool IsPointInRect(SKPoint point)
+
+        public override bool IsPointOverlap(SKPoint point)
         {
             var isInHorizontal = point.X > X && point.X < Width + X;
             var isInVertical = point.Y > Y && point.Y < Height + Y;
@@ -60,7 +68,7 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
             Radius = radius;
         }
 
-        public bool IsPointInCircle(SKPoint point)
+        public override bool IsPointOverlap(SKPoint point)
         {
             //(x1 - x2)^2 + (y1 - y2)^2 <= D^2
             var x = Math.Pow((point.X - X), 2);

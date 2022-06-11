@@ -105,19 +105,12 @@ namespace SkiaScene.TouchManipulation
 
 
             SKPoint resultVector = args.NewPoint - args.PreviousPoint;
-            //Debug.WriteLine($"{args.NewPoint.X} {args.NewPoint.Y}");
 
             SKPoint scenePoint = _skScene.GetCanvasPointFromViewPoint(args.NewPoint);
 
             var figure = isAnyFigureMoving ? _skScene.Figures?.FirstOrDefault(f => f.IsMoving) :
-                _skScene.Figures?.FirstOrDefault(f =>
-            {
-                if (f is Rect rect)
-                    return rect.IsPointInRect(scenePoint);
-                if (f is Circle circle)
-                    return circle.IsPointInCircle(scenePoint);
-                return false;
-            });
+                _skScene.Figures?.FirstOrDefault(f => f.IsPointOverlap(scenePoint));
+
             if (figure != null)
             {
                 figure.IsMoving = true;

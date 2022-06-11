@@ -8,5 +8,6 @@ namespace MySkiaPlayground.SkiaScene.SkiaObjects
         float X { get; set; }
         float Y { get; set; }
         bool IsMoving { get; set; }
+        bool IsPointOverlap(SKPoint point);
     }
 }
